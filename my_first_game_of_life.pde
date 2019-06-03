@@ -1,9 +1,10 @@
 int[][] grid;  // Declare the array
 int win_w = 800;
 int win_h = 800;
-int cell_width = 20;
+int cell_width = 10;
 int w = win_w / cell_width;
 int h = win_h / cell_width;
+int speed = 10; // In milliseconds
 
 int state = 1; // 1 = play, 0 = pause
 int btn_pos = 0; // For the prog to know which btn it's creating
@@ -21,7 +22,7 @@ void draw() {
   if(state == 1) {
     set_new_array();
     draw_grid();
-    delay(100);
+    delay(speed);
   }
 }
 
@@ -39,6 +40,7 @@ void set_new_array() {
   for (int i = 0; i < w; i++) {
     for (int j = 0; j < h; j++) {
       neighbors = get_neighbors(i, j);
+      
       /* ORIGINAL RULES :
       switch(neighbors) {
       case 3:
@@ -68,15 +70,8 @@ void set_new_array() {
       else {
         new_grid[i][j] = grid[i][j];
       }
-      
-      
-      
-      if(i < 5 && j < 5) {
-       println("grid[", i, "][", j, "] = ", grid[i][j]," and has ", neighbors, "neighbors.");
-      }
     }
   }
-  println("-----------------------------");
   grid = new_grid;
 }
 
@@ -133,7 +128,8 @@ void draw_cell(int i, int j) {
   if (grid[i][j] == 0) {
     fill(255);
   } else {
-    fill(255, 0, 0);
+    //fill(random(50, 200), random(50, 200), random(50, 200));
+    fill(50, 50, 50);
   }
 
   rect(i * cell_width, j * cell_width, cell_width, cell_width);
@@ -151,7 +147,8 @@ void apply_conf() {
   int count = 0;
   int i = 0, j = 0;
   //String conf = get_conf();  // get initial conf in txt file
-  String conf = "0 25 1 23 1 25 2 13 2 14 2 21 2 22 2 35 2 36 3 12 3 16 3 21 3 22 3 35 3 36 4 1 4 2 4 11 5 1 5 2 5 11 6 11 4 17 4 21 4 22 5 23 5 15 5 17 5 18 6 17 7 16 7 12 8 13 8 14 5 25 6 25";
+  //String conf = "0 25 1 23 1 25 2 13 2 14 2 21 2 22 2 35 2 36 3 12 3 16 3 21 3 22 3 35 3 36 4 1 4 2 4 11 5 1 5 2 5 11 6 11 4 17 4 21 4 22 5 23 5 15 5 17 5 18 6 17 7 16 7 12 8 13 8 14 5 25 6 25";
+  String conf = "15 15 15 16 15 17 14 16 17 16";
   
   // PLANEUR
   // "0 25 1 23 1 25 2 13 2 14 2 21 2 22 2 35 2 36 3 12 3 16 3 21 3 22 3 35 3 36 4 1 4 2 4 11 5 1 5 2 5 11 6 11 4 17 4 21 4 22 5 23 5 15 5 17 5 18 6 17 7 16 7 12 8 13 8 14 5 25 6 25"
