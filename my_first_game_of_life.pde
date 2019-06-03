@@ -5,7 +5,7 @@ int cell_width = 20;
 int w = win_w / cell_width;
 int h = win_h / cell_width;
 
-int state = 0; // 1 = play, 0 = pause
+int state = 1; // 1 = play, 0 = pause
 int btn_pos = 0; // For the prog to know which btn it's creating
 
 void setup() {
@@ -39,6 +39,7 @@ void set_new_array() {
   for (int i = 0; i < w; i++) {
     for (int j = 0; j < h; j++) {
       neighbors = get_neighbors(i, j);
+      /* ORIGINAL RULES :
       switch(neighbors) {
       case 3:
         new_grid[i][j] = 1;
@@ -48,7 +49,28 @@ void set_new_array() {
         break;
       default:
         new_grid[i][j] = 0;
+      }*/
+      
+      
+      /* NEW RULES */
+      if(grid[i][j] == 0 && neighbors == 3) {
+        new_grid[i][j] = 1;
       }
+      else if(grid[i][j] == 0 && 
+      (neighbors == 2 || neighbors == 3)) {
+        new_grid[i][j] = 1;
+      }
+      else if(neighbors == 0 ||
+      neighbors == 1 || 
+      neighbors == 4) {
+        new_grid[i][j] = 0;
+      }
+      else {
+        new_grid[i][j] = grid[i][j];
+      }
+      
+      
+      
       if(i < 5 && j < 5) {
        println("grid[", i, "][", j, "] = ", grid[i][j]," and has ", neighbors, "neighbors.");
       }
